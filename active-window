@@ -1,0 +1,17 @@
+#!/bin/python3
+
+import os
+import subprocess
+
+def active_window():
+    xprop = r"xprop -root | grep _NET_ACTIVE_WINDOW | head -1 |awk '{print $5}'"
+    wmctrl = r"wmctrl -lp |grep ({0}) |awk '{print $1}'"
+    command = wmctrl.replace(r"{0}", xprop)
+    print(command)
+    output = subprocess.check_output(command, shell=True)
+    return output
+    
+
+atcive = active_window()
+
+print("atcive: " + str(atcive))
