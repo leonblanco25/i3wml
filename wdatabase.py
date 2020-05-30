@@ -25,13 +25,13 @@ def list_cleanup(input,list):
         line_list = str(line_list).replace('b', '')
         line_list = str(line_list).replace(r'\n', '')
         line_list = str(line_list).replace(r"'", '')
-        window. append(line_list)
+        list. append(line_list)
 
 
 
-rows, cols = (9,9)
+#rows, cols = (9,9)
 #window = [[0 for i in range(cols)] for j in range(rows)]
-window = []
+#window = []
 
 #wind_list()
 
