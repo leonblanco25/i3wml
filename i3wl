@@ -10,7 +10,7 @@ ws = []
 active = ""
 
 # setting up the database
-database.wind_list(ws)
+wdatabase.wind_list(ws)
 
 for i in ws:
     print(i)
