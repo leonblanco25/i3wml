@@ -17,7 +17,7 @@ def cleanup(input):
     input = str(input).replace(r"'", '')
     return input
 
-active = active_window()
-wid = cleanup(str(active))
+#active = active_window()
+#wid = cleanup(str(active))
 
-print("atcive: " + str(wid))
+#print("atcive: " + str(wid))
