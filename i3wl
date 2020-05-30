@@ -1,0 +1,23 @@
+#!/bin/python3
+
+import os
+import subprocess
+import activeWin
+import wdatabase
+
+# setting up variables
+ws = []
+active = ""
+
+# setting up the database
+database.wind_list(ws)
+
+for i in ws:
+    print(i)
+
+# getting the currently active window
+active = activeWin.active_window()
+active = activeWin.cleanup(active)
+
+print(active)
+
