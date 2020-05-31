@@ -8,6 +8,30 @@ import wdatabase
 # setting up variables
 ws = []
 active = ""
+newMasterR = 0
+newMasterC  = 0
+oldMaster = " "
+newMaster = " "
+
+# looking for current active window in database
+def whereIsNew(newMaster, ws):
+     for i in range(9):
+        for b in range(9):
+            try:
+                test = ws[i][b]
+                if test == newMaster:
+                    newMasterR = i
+                    newMasterC = b
+                    break
+
+            except:
+                continue
+
+
+
+#def winSwap():
+     
+
 
 # setting up the database
 wdatabase.wind_list(ws)
@@ -18,6 +42,9 @@ for i in ws:
 # getting the currently active window
 active = activeWin.active_window()
 active = activeWin.cleanup(active)
+newMaster = str(active)
 
-print(active)
+whereIsNew(newMaster, ws)
+
+print(str(newMaster) + " at :" + str(newMasterR) + ' ' + str(newMasterC))
 
