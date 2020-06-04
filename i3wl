@@ -46,5 +46,9 @@ newMaster = str(active)
 
 whereIsNew(newMaster, ws)
 
+<<<<<<< HEAD
 print(str(newMaster) + " at :" + str(newMasterR) + ' ' + str(newMasterC))
 
+=======
+print(active)
+>>>>>>> 0f5ca7ef9986c567dd5d3e744e7a23c403c36d95
