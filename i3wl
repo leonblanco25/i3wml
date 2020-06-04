@@ -20,4 +20,3 @@ active = activeWin.active_window()
 active = activeWin.cleanup(active)
 
 print(active)
-
