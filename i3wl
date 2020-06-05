@@ -19,10 +19,11 @@ def whereIsNew(newMaster, ws):
      for i in range(9):
         for b in range(9):
             try:
-                test = ws[i][b]
-                test = str(test).replace('b\'' , '')
-                test = str(test).replace('\\n', '')
-                test = str(test).replace('\'', '') 
+                #test = ws[i][b]
+                test = activeWin.cleanup(w[i][b])
+                #test = str(test).replace('b\'' , '')
+                #test = str(test).replace('\\n', '')
+                #test = str(test).replace('\'', '') 
                 if test == newMaster:
                     print("found")
                     row = i
@@ -33,6 +34,16 @@ def whereIsNew(newMaster, ws):
             except:
                 continue
      return row, col
+
+# swapping the current active window with the old one
+def swap(newMaster,newMasterR, newMasterC, oldMaster, ws):
+    oldMaster = activeWin.cleanup(oldMaster)
+    command = "i3-msg [id=" + str(newMaster) + "] swap container with id " + str(oldMaster)
+    print(command)
+    os.system(command)
+    #ws[newMasterR][newMasterC] = oldMaster
+    #ws[newMasterR][0] = newMaster
+    return oldMaster
 
 # setting up the database
 wdatabase.wind_list(ws)
@@ -46,5 +57,18 @@ active = activeWin.cleanup(active)
 newMaster = str(active)
 
 newMasterR, newMasterC = whereIsNew(newMaster, ws)
+oldMaster = ws[newMasterR][0]
 
-print( str(newMaster) + " at: " + str(newMasterR) + str(newMasterC)) 
+print("New master(" + str(newMaster) + ") at: " + str(newMasterR) + ' ' + str(newMasterC)) 
+print("old master (" + str(oldMaster) + ") at: " + str(newMasterR) + ' 0')
+
+oldMaster= swap(newMaster,newMasterR,newMasterC,oldMaster,ws)
+
+ws[newMasterR][newMasterC] = oldMaster
+ws[newMasterR][0] = newMaster
+
+for i in ws:
+    print(i)
+
+
+print(ws[0][1])
