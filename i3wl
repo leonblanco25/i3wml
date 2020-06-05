@@ -1,17 +1,10 @@
 #!/bin/python3
 
 import os
+import time
 import subprocess
 import activeWin
 import wdatabase
-
-# setting up variables
-ws = []
-active = ""
-newMasterR = 0
-newMasterC  = 0
-oldMaster = " "
-newMaster = " "
 
 # looking for current active window in database
 def whereIsNew(newMaster, ws):
@@ -35,35 +28,48 @@ def whereIsNew(newMaster, ws):
 # swapping the current active window with the old one
 def swap(newMaster,newMasterR, newMasterC, oldMaster, ws):
     oldM = activeWin.cleanup(oldMaster)
-    command = "i3-msg [id=" + str(newMaster) + "] swap container with id " + str(oldM)
-    os.system(command)
+    if oldM != newMaster:
+        command = "i3-msg [id=" + str(newMaster) + "] swap container with id " + str(oldM)
+        os.system(command)
     return oldM
 
 
+# code loop
+def sLoop():
+
+    ws = []
+    active = ""
+    newMasterR = 0
+    newMasterC  = 0
+    oldMaster = " "
+    newMaster = " "
+
+    # setting up the database
+    wdatabase.wind_list(ws)
+
+    while True:
+        time.sleep(2)
+        # getting the currently active window
+        active = activeWin.active_window()
+        newMaster = activeWin.cleanup(active)
+
+        # searches for current active on list
+        newMasterR, newMasterC = whereIsNew(newMaster, ws)
+
+        oldMaster = ws[newMasterR][0]
+        print("New master(" + str(newMaster) + ") at: " + str(newMasterR) + ' ' + str(newMasterC)) 
+        print("old master (" + str(oldMaster) + ") at: " + str(newMasterR) + ' 0')
+
+        # swaps window and ID position
+        oldMaster= swap(newMaster,newMasterR,newMasterC,oldMaster,ws)
+
+        ws[newMasterR][newMasterC] = oldMaster
+        ws[newMasterR][0] = newMaster
+    
+        for i in ws:
+            print(i)
 
 
-# setting up the database
-wdatabase.wind_list(ws)
 
 
-# getting the currently active window
-active = activeWin.active_window()
-newMaster = activeWin.cleanup(active)
-
-# searches for current active on list
-newMasterR, newMasterC = whereIsNew(newMaster, ws)
-
-oldMaster = ws[newMasterR][0]
-print("New master(" + str(newMaster) + ") at: " + str(newMasterR) + ' ' + str(newMasterC)) 
-print("old master (" + str(oldMaster) + ") at: " + str(newMasterR) + ' 0')
-
-# swaps window and ID position
-oldMaster= swap(newMaster,newMasterR,newMasterC,oldMaster,ws)
-
-ws[newMasterR][newMasterC] = oldMaster
-ws[newMasterR][0] = newMaster
-
-for i in ws:
-    print(i)
-
-
+sLoop()
