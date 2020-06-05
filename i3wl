@@ -15,17 +15,24 @@ newMaster = " "
 
 # looking for current active window in database
 def whereIsNew(newMaster, ws):
+     row, col = (0, 0)
      for i in range(9):
         for b in range(9):
             try:
                 test = ws[i][b]
+                test = str(test).replace('b\'' , '')
+                test = str(test).replace('\\n', '')
+                test = str(test).replace('\'', '') 
                 if test == newMaster:
-                    newMasterR = i
-                    newMasterC = b
+                    print("found")
+                    row = i
+                    col = b
+                    print(str(row) + " " + str(col))
                     break
 
             except:
                 continue
+     return row, col
 
 # setting up the database
 wdatabase.wind_list(ws)
@@ -38,7 +45,6 @@ active = activeWin.active_window()
 active = activeWin.cleanup(active)
 newMaster = str(active)
 
-whereIsNew(newMaster, ws)
+newMasterR, newMasterC = whereIsNew(newMaster, ws)
 
-print(str(newMaster) + " at :" + str(newMasterR) + ' ' + str(newMasterC))
-
+print( str(newMaster) + " at: " + str(newMasterR) + str(newMasterC)) 

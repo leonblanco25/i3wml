@@ -11,14 +11,8 @@ def active_window():
     output = subprocess.check_output(xprop, shell=True)
     return output
 
-
 def cleanup(input):
-    input = str(input).replace('b', '')
-    input = str(input).replace(r'\n', '')
-    input = str(input).replace(r"'", '')
+    input = str(input).replace('b\'', '')
+    input = str(input).replace('\\n', '')
+    input = str(input).replace('\'', '')
     return input
-
-# active = active_window()
-# wid = cleanup(str(active))
-
-#print("atcive: " + str(wid))
