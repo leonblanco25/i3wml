@@ -19,49 +19,45 @@ def whereIsNew(newMaster, ws):
      for i in range(9):
         for b in range(9):
             try:
-                #test = ws[i][b]
-                test = activeWin.cleanup(w[i][b])
-                #test = str(test).replace('b\'' , '')
-                #test = str(test).replace('\\n', '')
-                #test = str(test).replace('\'', '') 
-                if test == newMaster:
-                    print("found")
+                index = ws[i][b]
+                wind = activeWin.cleanup(index)
+                if wind == newMaster:
                     row = i
                     col = b
-                    print(str(row) + " " + str(col))
                     break
 
             except:
                 continue
      return row, col
 
+
+
 # swapping the current active window with the old one
 def swap(newMaster,newMasterR, newMasterC, oldMaster, ws):
-    oldMaster = activeWin.cleanup(oldMaster)
-    command = "i3-msg [id=" + str(newMaster) + "] swap container with id " + str(oldMaster)
-    print(command)
+    oldM = activeWin.cleanup(oldMaster)
+    command = "i3-msg [id=" + str(newMaster) + "] swap container with id " + str(oldM)
     os.system(command)
-    #ws[newMasterR][newMasterC] = oldMaster
-    #ws[newMasterR][0] = newMaster
-    return oldMaster
+    return oldM
+
+
+
 
 # setting up the database
 wdatabase.wind_list(ws)
 
-for i in ws:
-    print(i)
 
 # getting the currently active window
 active = activeWin.active_window()
-active = activeWin.cleanup(active)
-newMaster = str(active)
+newMaster = activeWin.cleanup(active)
 
+# searches for current active on list
 newMasterR, newMasterC = whereIsNew(newMaster, ws)
-oldMaster = ws[newMasterR][0]
 
+oldMaster = ws[newMasterR][0]
 print("New master(" + str(newMaster) + ") at: " + str(newMasterR) + ' ' + str(newMasterC)) 
 print("old master (" + str(oldMaster) + ") at: " + str(newMasterR) + ' 0')
 
+# swaps window and ID position
 oldMaster= swap(newMaster,newMasterR,newMasterC,oldMaster,ws)
 
 ws[newMasterR][newMasterC] = oldMaster
@@ -71,4 +67,3 @@ for i in ws:
     print(i)
 
 
-print(ws[0][1])
