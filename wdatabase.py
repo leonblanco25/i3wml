@@ -13,17 +13,14 @@ def wind_list(list):
         line = str(line).replace('0', str(i))
         output = subprocess.check_output(line, shell=True)
         line = command
-        #print(output)   # checking what comes back from bash
+        output = str(output).strip('b\'')
+        output = str(output).strip('\'')
         list_cleanup(output, list)
 
 
-def list_cleanup(input, list):
+def list_create(input, list):
     stripped_line = input. strip()
     line_list = str(stripped_line). split("\\n")
-    #line_list = str(line_list).strip('b')
-    #line_list = str(line_list).replace(r'\n', '')
-    #line_list = str(line_list).replace('\'', '')
-    #print (line_list) # checking what gets added to list
     list. append(line_list)
 
 
@@ -31,11 +28,16 @@ def list_cleanup(input, list):
 def debug():
 
     ws = []
+    wind = []
 
     wind_list(ws)
     for i in ws:
-         print(i)
-    print(ws[0][1])
+        print(i)
+    print(ws[1][1])
 
+    for i in range(11):
+        del ws[i][-1]
 
+    for i in ws:
+        print(i)
 #debug()
